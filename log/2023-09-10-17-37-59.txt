@@ -1,0 +1,2 @@
+2023-09-10 17:37:59.293048 used >>>Allload<<< by the bot 000000000000000001
+2023-09-10 17:38:26.526687 used <discord.app_commands.commands.Command object at 0x000001E8F1D274F0> by yureivliver 403895664666214400
