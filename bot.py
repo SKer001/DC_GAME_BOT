@@ -39,6 +39,27 @@ async def on_ready():
         json.dump(config,file,indent=4)
 ################################################################
 @bot.command()
+async def dellog(ctx):
+    if ctx.author.id == 403895664666214400:
+        for filename in os.listdir("log"):
+            if filename[8:-13] != datetime.datetime.now().strftime("%d"):
+                os.remove(f"log/{filename}")
+        reback(ctx.author.name,ctx.author.id,dellog)
+        await ctx.send(f"已刪除舊紀錄了喵!!")
+    else :
+        await ctx.send(f"你沒資格")
+@bot.tree.command(name="dellog",description="To delete the log files(only the bot owner can use)")
+async def dellog(interaction:discord.Interaction):
+    if interaction.user.id == 403895664666214400:
+        for filename in os.listdir("log"):
+            if filename[8:-13] != datetime.datetime.now().strftime("%d"):
+                os.remove(f"log/{filename}")
+        reback(interaction.user.name,interaction.user.id,"slash_dellog")
+        await interaction.response.send_message(f"已刪除舊紀錄了喵!!")
+    else:
+        await interaction.response.send_message(f"你沒資格",ephemeral=True)
+################################################################
+@bot.command()
 async def ping(ctx):
     await ctx.send(f"Pong! {round(bot.latency * 1000)}ms")
     reback(ctx.author.name,ctx.message.author.id,ping)
