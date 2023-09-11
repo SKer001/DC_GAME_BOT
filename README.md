@@ -1,2 +1,2 @@
 # DC_GAME_BOT
-##For the cat!!!
+## The bot for the cat!!!
