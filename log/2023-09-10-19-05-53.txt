@@ -1,5 +1,0 @@
-2023-09-10 19:05:53.567011 used >>>Allload<<< by the bot 000000000000000001
-2023-09-10 19:06:12.740394 used <discord.app_commands.commands.Command object at 0x0000026590797E20> by yureivliver 403895664666214400
-2023-09-10 19:06:29.885376 used on_guild_join by the bot 000000000000000001
-2023-09-10 19:14:51.124696 used <discord.app_commands.commands.Command object at 0x00000265907959C0> by yureivliver 403895664666214400
-2023-09-10 19:15:14.259321 used on_guild_join by the bot 000000000000000001
