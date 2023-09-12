@@ -170,7 +170,6 @@ async def Allload():
     for filename in os.listdir("cmds"):
         if filename.endswith(".py"):
             await bot.load_extension(f"cmds.{filename[:-3]}")
-
     reback("the bot","000000000000000001",">>>Allload<<<")
 
 loop = asyncio.get_event_loop()
