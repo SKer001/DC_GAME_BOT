@@ -4,6 +4,7 @@
 * [作者](#author)
 * [機器人](#bot)
 * [目前功能](#command)
+* [目前BUG](#error)
 * [未來功能](#for_updata)
 *****
 <h2 id="author">關於我</h2>
