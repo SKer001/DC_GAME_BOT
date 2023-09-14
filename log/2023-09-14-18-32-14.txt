@@ -1,2 +1,0 @@
-2023-09-14 18:32:14.820342 used >>>Allload<<< by the bot 000000000000000001
-2023-09-14 18:35:05.021844 used slash_dellog_success by yureivliver 403895664666214400
