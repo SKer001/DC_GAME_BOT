@@ -15,6 +15,9 @@ DInteracion = discord.Interaction
 with open('guild_info.json',mode='r',encoding="utf-8") as file:
     guild_info = json.load(file)
 
+with open("./For_Eat.json","r", encoding="utf-8") as Jfile:
+    food_data = json.load(Jfile)
+
 class slashcommand(Cog_Extension):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
@@ -35,7 +38,8 @@ class slashcommand(Cog_Extension):
         DChoice(name=f"CardBettleSys",value=1),
         DChoice(name=f"event",value=2),
         DChoice(name=f"guild",value=3),
-        DChoice(name=f"rpg",value=4)
+        DChoice(name=f"rpg",value=4),
+        DChoice(name=f"slashcommand",value=5)
     ])
     async def reload(self,interaction:DInteracion,extensions:DChoice[int]):
         if  interaction.user.id == 403895664666214400:
@@ -51,7 +55,8 @@ class slashcommand(Cog_Extension):
         DChoice(name=f"CardBettleSys",value=1),
         DChoice(name=f"event",value=2),
         DChoice(name=f"guild",value=3),
-        DChoice(name=f"rpg",value=4)
+        DChoice(name=f"rpg",value=4),
+        DChoice(name=f"slashcommand",value=5)
     ])
     async def load(self,interaction:DInteracion,extensions:DChoice[int]):
         if  interaction.user.id == 403895664666214400:
@@ -67,7 +72,8 @@ class slashcommand(Cog_Extension):
         DChoice(name=f"CardBettleSys",value=1),
         DChoice(name=f"event",value=2),
         DChoice(name=f"guild",value=3),
-        DChoice(name=f"rpg",value=4)
+        DChoice(name=f"rpg",value=4),
+        DChoice(name=f"slashcommand",value=5)
     ])
     async def unload(self,interaction:DInteracion,extensions:DChoice[int]):
         if  interaction.user.id == 403895664666214400:
@@ -109,14 +115,12 @@ class slashcommand(Cog_Extension):
             reback(interaction.user.name,interaction.user.id,"slash_info_owner")
 ##################################################################
     @app_commands.command(name="ping",description="To test the latency between the guild and bot")
-    @app_commands.describe(ping="ping me!!!")
-    async def ping(self, interaction:DInteracion,ping:str):
+    async def ping(self, interaction:DInteracion):
         await interaction.response.send_message(f"Pong! {round(self.bot.latency * 1000)}ms")
         reback(interaction.user.name,interaction.user.id,"slash_ping")
 ##################################################################
     @app_commands.command(name="dellog",description="delete the old log files(only for bot owner use)")
-    @app_commands.describe(dellog="delete it!!!")
-    async def dellog(self,interaction:DInteracion,dellog:str):
+    async def dellog(self,interaction:DInteracion):
         if interaction.user.id == 403895664666214400:
             for filename in os.listdir("log"):
                 if filename[8:-13] != datetime.datetime.now().strftime("%d"):
@@ -126,6 +130,28 @@ class slashcommand(Cog_Extension):
         else:
             await interaction.response.send_message(f"你沒資格",ephemeral=True)
             reback(interaction.user.name,interaction.user.id,"slash_dellog_fail")
+##################################################################
+    @app_commands.command(name="addfood",description="Add food to the list")
+    @app_commands.describe(food="Add a kind of food that you want to eat")
+    async def addeat(self,ineraction:discord.Interaction,food:str):
+        global food_data
+        food_data["data"].append(food)
+        with open("./For_Eat.json","w",encoding="utf-8") as Jfile:
+            json.dump(food_data,Jfile,indent=4,ensure_ascii=False)
+        await ineraction.response.send_message(f"已添加 >>>{food}<<< 到選單中，喵!!!")
+        reback(ineraction.user.name,ineraction.user.id,"slash_AddEat")
+        with open("./For_Eat.json","r", encoding="utf-8") as Jfile:
+            data = json.load(Jfile)
+##################################################################
+    @app_commands.command(name="foodlist",description="To see the list of food")
+    async def foodlist(self,ineraction:discord.Interaction):
+        List = "|"
+        for data in food_data["data"]:
+            List = (f"{List + data}|")
+        await ineraction.response.send_message(f"有>>>{List}<<<可以吃")
+        reback(ineraction.user.name,ineraction.user.id,"slash_EatList")
+##################################################################
+##################################################################
 ##################################################################
 ##################################################################
 async def setup(bot):
