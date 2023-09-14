@@ -6,6 +6,8 @@ import random
 import json
 from core.Def import reback
 
+options = discord.app_commands.Choice
+
 class CardBettleSys(Cog_Extension):
     pass
 async def setup(bot):
