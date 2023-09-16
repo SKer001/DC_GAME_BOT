@@ -16,7 +16,13 @@ class event(Cog_Extension):
             reback(msg.author.name,msg.author.id ,msg.content)
             output = str(random.choice(data["data"]))
             await msg.channel.send(f"吃{output}ᓚᘏᗢ")
-################################################################  
+################################################################
+    @commands.command()
+    async def EatFood(self,ctx):
+        food = random.choice(data["data"])
+        await ctx.send(f"{ctx.author.mention} 吃>{food}<吧喵!!")
+        reback(ctx.author.name,ctx.author.id,"EatFood")
+################################################################
     @commands.command()
     async def AddEat(self,ctx,food):
         global data

@@ -27,10 +27,21 @@ class slashcommand(Cog_Extension):
     @app_commands.choices(choices=[
         discord.app_commands.Choice(name="yor name",value=1)
     ])
-    async def slash(self,interaction:DInteracion,choices:discord.app_commands.Choice[int]):
+    async def slash(self,interaction:DInteracion,choices:DChoice[int]):
         if choices.value == 1:
             await interaction.response.send_message(f"your name is {interaction.user.name}",ephemeral=True)
         reback(interaction.user.name,interaction.user.id,"slash_slash")    
+##################################################################
+    @app_commands.command(name="reloadall", description="Reload all Cogs")
+    async def reloadall(self,interaction:DInteracion):
+        if interaction.user.id == 403895664666214400:
+            for filename in os.listdir("cmds"):
+                if filename.endswith(".py"):
+                    await self.bot.reload_extension(f"cmds.{filename[:-3]}")
+            await interaction.response.send_message(f"Has reloaded all extensions",ephemeral=True)
+            reback(interaction.user.name,interaction.user.id,"slash_reloadall")
+        else:
+            await interaction.response.send_message(f"你沒資格",ephemeral=True)
 ##################################################################
     @app_commands.command(name="reload",description="Reload Cog")
     @app_commands.describe(extensions="Choices one to reload it")
@@ -42,7 +53,7 @@ class slashcommand(Cog_Extension):
         DChoice(name=f"slashcommand",value=5)
     ])
     async def reload(self,interaction:DInteracion,extensions:DChoice[int]):
-        if  interaction.user.id == 403895664666214400:
+        if interaction.user.id == 403895664666214400:
             await self.bot.reload_extension(f"cmds.{extensions.name}")
             await interaction.response.send_message(f"Reloaded {extensions.name} done",ephemeral=True)
             reback(interaction.user.name,interaction.user.id,"slash_reload")
@@ -83,7 +94,7 @@ class slashcommand(Cog_Extension):
         else:
             await interaction.response.send_message(f"你沒資格",ephemeral=True)
 ################################################################## (not done yet)
-    @app_commands.command(name="info",description="you can see what about the this cat")
+    @app_commands.command(name="info",description="You can see what about the this cat")
     @app_commands.describe(info="choice bot or owner")
     @app_commands.choices(info=[
         DChoice(name="bot",value=1),
@@ -119,7 +130,7 @@ class slashcommand(Cog_Extension):
         await interaction.response.send_message(f"Pong! {round(self.bot.latency * 1000)}ms")
         reback(interaction.user.name,interaction.user.id,"slash_ping")
 ##################################################################
-    @app_commands.command(name="dellog",description="delete the old log files(only for bot owner use)")
+    @app_commands.command(name="dellog",description="Delete the old log files(only for bot owner use)")
     async def dellog(self,interaction:DInteracion):
         if interaction.user.id == 403895664666214400:
             for filename in os.listdir("log"):
@@ -131,9 +142,15 @@ class slashcommand(Cog_Extension):
             await interaction.response.send_message(f"你沒資格",ephemeral=True)
             reback(interaction.user.name,interaction.user.id,"slash_dellog_fail")
 ##################################################################
+    @app_commands.command(name="eatfood",description="Random choose the food that you eat")
+    async def eatfood(self, interaction:DInteracion):
+        food = random.choice(food_data["data"])
+        await interaction.response.send_message(f"{interaction.user.mention} 吃>{food}<吧喵!!")
+        reback(interaction.user.name,interaction.user.id,"slash_eatfood")
+##################################################################
     @app_commands.command(name="addfood",description="Add food to the list")
     @app_commands.describe(food="Add a kind of food that you want to eat")
-    async def addeat(self,ineraction:discord.Interaction,food:str):
+    async def addeat(self,ineraction:DInteracion,food:str):
         global food_data
         food_data["data"].append(food)
         with open("./For_Eat.json","w",encoding="utf-8") as Jfile:
@@ -144,7 +161,7 @@ class slashcommand(Cog_Extension):
             data = json.load(Jfile)
 ##################################################################
     @app_commands.command(name="foodlist",description="To see the list of food")
-    async def foodlist(self,ineraction:discord.Interaction):
+    async def foodlist(self,ineraction:DInteracion):
         List = "|"
         for data in food_data["data"]:
             List = (f"{List + data}|")

@@ -109,6 +109,17 @@ async def reload(ctx,extension):
     else:
         await ctx.send(f"你沒資格")
 ##################################################################
+@bot.command()
+async def reloadall(ctx):
+    if ctx.author.id == 403895664666214400:
+        for filename in os.listdir("cmds"):
+            if filename.endswith(".py"):
+                await bot.reload_extension(f"cmds.{filename[:-3]}")
+        await ctx.send(f"Has reloaded all extensions",ephemeral=True)
+        reback(ctx.author.name,ctx.author.id,"slash_reloadall")
+    else:
+        await ctx.send("你沒資格")
+##################################################################
 async def Allload():
     for filename in os.listdir("cmds"):
         if filename.endswith(".py"):
