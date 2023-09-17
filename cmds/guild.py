@@ -1,8 +1,8 @@
 from core.classes import Cog_Extension
 from discord.ext import commands
 import json
-from core.Def import reback #(user_name,user_id,command)
-
+from core.Def import custom_bot_command as CBC 
+reback = CBC.reback#(user_name,user_id,command)
 class guild(Cog_Extension):
     @commands.Cog.listener()
     async def on_guild_join(self, guild):

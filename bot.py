@@ -5,8 +5,7 @@ import json
 import os
 import datetime
 import asyncio
-from core.Def import reback
-from core.Def import custom_bot_command
+from core.Def import custom_bot_command as CBC
 
 intents = discord.Intents.default()
 intents.members = True  
@@ -17,6 +16,8 @@ intents.guilds = True
 bot = commands.Bot(command_prefix='^',intents=intents)
 
 DChoice = discord.app_commands.Choice
+
+reback = CBC.reback
 
 with open('guild_info.json',mode='r',encoding="utf-8") as file:
     guild_info = json.load(file)

@@ -6,11 +6,13 @@ import datetime
 import os
 import random
 import json
-from core.Def import reback
+from core.Def import custom_bot_command as CBC
 
 DChoice = discord.app_commands.Choice
 
 DInteracion = discord.Interaction
+
+reback = CBC.reback
 
 with open('guild_info.json',mode='r',encoding="utf-8") as file:
     guild_info = json.load(file)
@@ -150,24 +152,49 @@ class slashcommand(Cog_Extension):
 ##################################################################
     @app_commands.command(name="addfood",description="Add food to the list")
     @app_commands.describe(food="Add a kind of food that you want to eat")
-    async def addeat(self,ineraction:DInteracion,food:str):
+    async def addeat(self,interaction:DInteracion,food:str):
         global food_data
         food_data["data"].append(food)
         with open("./For_Eat.json","w",encoding="utf-8") as Jfile:
             json.dump(food_data,Jfile,indent=4,ensure_ascii=False)
-        await ineraction.response.send_message(f"已添加 >>>{food}<<< 到選單中，喵!!!")
-        reback(ineraction.user.name,ineraction.user.id,"slash_AddEat")
+        await interaction.response.send_message(f"已添加 >>>{food}<<< 到選單中，喵!!!")
+        reback(interaction.user.name,interaction.user.id,"slash_AddEat")
         with open("./For_Eat.json","r", encoding="utf-8") as Jfile:
-            data = json.load(Jfile)
+            food_data = json.load(Jfile)
 ##################################################################
     @app_commands.command(name="foodlist",description="To see the list of food")
-    async def foodlist(self,ineraction:DInteracion):
+    async def foodlist(self,interaction:DInteracion):
         List = "|"
         for data in food_data["data"]:
             List = (f"{List + data}|")
-        await ineraction.response.send_message(f"有>>>{List}<<<可以吃")
-        reback(ineraction.user.name,ineraction.user.id,"slash_EatList")
+        await interaction.response.send_message(f"有>>>{List}<<<可以吃")
+        reback(interaction.user.name,interaction.user.id,"slash_EatList")
 ##################################################################
+    @app_commands.command(name="createcard",description="Create a new card")
+    @app_commands.describe(name="The name of card")
+    @app_commands.describe(atk="Attack power")
+    @app_commands.describe(defense="Defense")
+    @app_commands.describe(matk="Magic attack power")
+    @app_commands.describe(mdef="Magic defense")
+    @app_commands.describe(hp="Health Points")
+    @app_commands.describe(agi="Agility")
+    @app_commands.describe(con="Constitution")
+    @app_commands.choices(con=[
+        DChoice(name="光",value=1),
+        DChoice(name="暗",value=2),
+        DChoice(name="水",value=3),
+        DChoice(name="火",value=4),
+        DChoice(name="木",value=5),
+        DChoice(name="土",value=6)
+    ])
+    @app_commands.describe(sp="Star points")
+    async def createcard(self,interaction:DInteracion,name:str,atk:int,defense:int,matk:int,mdef:int,hp:int,agi:int,con:DChoice[int],sp:int):
+        if interaction.user.id == 403895664666214400:
+            CBC.create_card(name=name,ATK=atk,DEF=defense,MATK=matk,MDEF=mdef,HP=hp,AGI=agi,CON=con.name,SP=sp)
+            await interaction.response.send_message(f"{interaction.user.mention} Has created a new card into data")
+            reback(interaction.user.name,interaction.user.id,"slash_create card")
+        else:
+            await interaction.response.send_message(f"你沒資格",ephemeral=True)
 ##################################################################
 ##################################################################
 ##################################################################
