@@ -45,3 +45,5 @@ _沒有哦～_
 - [ ] 定時系統
 - [ ] AI聊天系統
 
+[![Run on Repl.it](https://replit.com/badge/github/SKer001/DC_GAME_BOT)](https://replit.com/new/github/SKer001/DC_GAME_BOT)
+
