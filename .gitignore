@@ -1,2 +1,8 @@
 config.json 
 log/
+.pythonlibs/
+.replit
+cmds/__pycache__/CardBettleSys.cpython-310.pyc
+poetry.lock
+pyproject.toml
+replit.nix
