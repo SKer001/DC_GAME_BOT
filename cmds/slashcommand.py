@@ -34,7 +34,7 @@ class slashcommand(Cog_Extension):
             await interaction.response.send_message(f"your name is {interaction.user.name}",ephemeral=True)
         reback(interaction.user.name,interaction.user.id,"slash_slash")    
 ##################################################################
-    @app_commands.command(name="reloadall", description="Reload all Cogs")
+   @app_commands.command(name="reloadall", description="Reload all Cogs")
     async def reloadall(self,interaction:DInteracion):
         if interaction.user.id == 403895664666214400:
             for filename in os.listdir("cmds"):
@@ -170,7 +170,11 @@ class slashcommand(Cog_Extension):
         await interaction.response.send_message(f"有>>>{List}<<<可以吃")
         reback(interaction.user.name,interaction.user.id,"slash_EatList")
 ##################################################################
-    @app_commands.command(name="createcard",description="Create a new card")
+    @app_commands.Group(name="cards")
+        pass
+##################################################################
+
+@app_commands.command(name="createcard",description="Create a new monster card")
     @app_commands.describe(name="The name of card")
     @app_commands.describe(atk="Attack power")
     @app_commands.describe(defense="Defense")
