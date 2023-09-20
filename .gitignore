@@ -7,3 +7,4 @@ poetry.lock
 pyproject.toml
 replit.nix
 cmds/__pycache__/
+core/__pycache__/
