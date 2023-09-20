@@ -27,12 +27,19 @@ class slashcommand(Cog_Extension):
     @app_commands.command(name="slash", description="for test")
     @app_commands.describe(choices="what do yuo want to see?")
     @app_commands.choices(choices=[
-        discord.app_commands.Choice(name="yor name",value=1)
+        DChoice(name="your name",value=1),
+        DChoice(name="your discord id",value=2),
+        DChoice(name="your icon",value=3)
     ])
     async def slash(self,interaction:DInteracion,choices:DChoice[int]):
         if choices.value == 1:
-            await interaction.response.send_message(f"your name is {interaction.user.name}",ephemeral=True)
-        reback(interaction.user.name,interaction.user.id,"slash_slash")    
+            await interaction.response.send_message(f"{interaction.user.mention} your name is {interaction.user.name}",ephemeral=True)
+        elif choices.value == 2:
+            await interaction.response.send_message(f"{interaction.user.mention} your discord id is `{interaction.user.id}`",ephemeral=True)
+        elif choices.value == 3:
+            icon =interaction.user.avatar
+            await interaction.response.send_message(f"{interaction.user.mention} your icon is here{icon}")        
+        reback(interaction.user.name,interaction.user.id,"slash_slash")
 ##################################################################
     @app_commands.command(name="reloadall", description="Reload all Cogs")
     async def reloadall(self,interaction:DInteracion):
