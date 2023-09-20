@@ -6,3 +6,4 @@ cmds/__pycache__/CardBettleSys.cpython-310.pyc
 poetry.lock
 pyproject.toml
 replit.nix
+cmds/__pycache__/
