@@ -6,6 +6,7 @@ import os
 import datetime
 import asyncio
 from core.Def import custom_bot_command as CBC
+import keep_alive
 
 intents = discord.Intents.default()
 intents.members = True  
@@ -32,7 +33,7 @@ async def on_ready():
     config["online_times"] = config["online_times"] + 1
     times = config["online_times"]
     Channel = bot.get_guild(832219486153080883).get_channel(config["retrack_channel_id"])
-    await Channel.send("第"+ str(times) +"次上線ING")
+    await Channel.send("第"+ str(times) +"次線上上線ING")
     try:
         sycned = await bot.tree.sync()
         print (f"Synced {len(sycned)} commands")
@@ -129,5 +130,8 @@ async def Allload():
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(Allload())
+
+keep_alive.keep_alive()
+
 if __name__ == "__main__":
     bot.run(config["token"])
