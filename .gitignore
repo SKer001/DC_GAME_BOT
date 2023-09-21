@@ -9,3 +9,4 @@ replit.nix
 cmds/__pycache__
 core/__pycache__
 *.pyc
+keep_alive.py
