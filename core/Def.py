@@ -36,11 +36,11 @@ class custom_bot_command():
             "description": ""
         }
         filecard.append(card_dic_basic)
-        with open(f"cards/traps.json", "w", encoding="utf-8") as CardFile:
+        with open(f"cards/monster.json", "w", encoding="utf-8") as CardFile:
             json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
     def create_trap_card(name:str,SP: int):
-        with open(f"cards/taps.json", "r", encoding="utf-8") as file:
+        with open(f"cards/traps.json", "r", encoding="utf-8") as file:
             filecard = list(json.load(file))
         card_dic_basic = {
             "skill-name": name,
