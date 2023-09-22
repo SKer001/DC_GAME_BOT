@@ -34,12 +34,16 @@ async def on_ready():
     times = config["online_times"]
     Channel = bot.get_guild(832219486153080883).get_channel(config["retrack_channel_id"])
     await Channel.send("第"+ str(times) +"次線上上線ING")
+    for filename in os.listdir("cmds"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"cmds.{filename[:-3]}")
+    reback("the bot","000000000000000001",">>>Allload<<<")
     try:
         sycned = await bot.tree.sync()
         print (f"Synced {len(sycned)} commands")
     except Exception as e:
         print (e)
-    print("Online")
+    print(">>>Online<<<")
     with open("config.json",mode='w',encoding="utf-8") as file:
         json.dump(config,file,indent=4)
 ################################################################
@@ -122,14 +126,6 @@ async def reloadall(ctx):
     else:
         await ctx.send("你沒資格")
 ##################################################################
-async def Allload():
-    for filename in os.listdir("cmds"):
-        if filename.endswith(".py"):
-            await bot.load_extension(f"cmds.{filename[:-3]}")
-    reback("the bot","000000000000000001",">>>Allload<<<")
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(Allload())
 
 keep_alive.keep_alive()
 

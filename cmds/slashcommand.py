@@ -158,7 +158,6 @@ class slashcommand(Cog_Extension):
         f"Pong! {round(self.bot.latency * 1000)}ms")
     reback(interaction.user.name, interaction.user.id, "slash_ping")
 ##################################################################
-
   @app_commands.command(
       name="dellog",
       description="Delete the old log files(only for bot owner use)")
@@ -205,17 +204,16 @@ class slashcommand(Cog_Extension):
     await interaction.response.send_message(f"有>>>{List}<<<可以吃")
     reback(interaction.user.name, interaction.user.id, "slash_EatList")
 ##################################################################
-
-  @app_commands.command(name="create-monster-card",
-                        description="Create a new monster card")
+##################################################################
   @app_commands.describe(name="The name of card")
+  @app_commands.command(name="create-monster-card",description="Create a new monster card")
   @app_commands.describe(atk="Attack power")
   @app_commands.describe(defense="Defense")
   @app_commands.describe(matk="Magic attack power")
   @app_commands.describe(mdef="Magic defense")
   @app_commands.describe(hp="Health Points")
   @app_commands.describe(agi="Agility")
-  @app_commands.describe(con="Constitution")
+  @app_commands.describe(con="Constitutioncards")
   @app_commands.choices(con=[
       DChoice(name="光", value=1),
       DChoice(name="暗", value=2),
@@ -239,13 +237,22 @@ class slashcommand(Cog_Extension):
                               CON=con.name,
                               SP=sp)
       await interaction.response.send_message(
-          f"{interaction.user.mention} Has created a new card into data")
+          f"{interaction.user.mention} Has created a new monster card into data")
       reback(interaction.user.name, interaction.user.id, "slash_create monster card")
     else:
       await interaction.response.send_message(f"你沒資格", ephemeral=True)
-
-
 ##################################################################
+  @app_commands.command(name="create-trap-card",description="Create a new trap card")
+  @app_commands.describe(name="The name of card")
+  @app_commands.describe(sp="Star points")
+  async def createtrapcard(self, interaction: DInteracion, name: str,sp: int):
+    if interaction.user.id == 403895664666214400:
+      CBC.create_trap_card(name=name,SP=sp)
+      await interaction.response.send_message(
+          f"{interaction.user.mention} Has created a new trap card into data")
+      reback(interaction.user.name, interaction.user.id, "slash_create trap card")
+    else:
+      await interaction.response.send_message(f"你沒資格", ephemeral=True)
 ##################################################################
 ##################################################################
 async def setup(bot):
