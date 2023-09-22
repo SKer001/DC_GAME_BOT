@@ -4,6 +4,7 @@ import json
 import os
 import asyncio
 import datetime
+import requests
 
 intents = discord.Intents.default()
 intents.members = True  
