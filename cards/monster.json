@@ -1,3 +1,15 @@
 [
-    "monster"
+    "monster",
+    {
+        "name": "tt",
+        "ATK": 1,
+        "DEF": 1,
+        "MATK": 1,
+        "MDEF": 1,
+        "HP": 1,
+        "AGI": 1,
+        "CON": "火",
+        "SP": 1,
+        "description": ""
+    }
 ]
