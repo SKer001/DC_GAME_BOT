@@ -205,8 +205,9 @@ class slashcommand(Cog_Extension):
     reback(interaction.user.name, interaction.user.id, "slash_EatList")
 ##################################################################
 ##################################################################
-  @app_commands.describe(name="The name of card")
+
   @app_commands.command(name="create-monster-card",description="Create a new monster card")
+  @app_commands.describe(name="The name of card")
   @app_commands.describe(atk="Attack power")
   @app_commands.describe(defense="Defense")
   @app_commands.describe(matk="Magic attack power")
