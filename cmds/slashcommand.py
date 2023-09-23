@@ -254,6 +254,18 @@ class slashcommand(Cog_Extension):
     else:
       await interaction.response.send_message(f"你沒資格", ephemeral=True)
 ##################################################################
+  @app_commands.command(name="create-magic-card",description="Create a new magic card")
+  @app_commands.describe(name="The name of card")
+  @app_commands.describe(sp="Star points")
+  async def createmagiccard(self, interaction: DInteracion, name: str,sp: int):
+    if interaction.user.id == 403895664666214400:
+      CBC.create_magic_card(name=name,SP=sp)
+      await interaction.response.send_message(
+          f"{interaction.user.mention} Has created a new magic card into data")
+      reback(interaction.user.name, interaction.user.id, "slash_create magic card")
+    else:
+      await interaction.response.send_message(f"你沒資格", ephemeral=True)
+##################################################################
 ##################################################################
 async def setup(bot):
   await bot.add_cog(slashcommand(bot))
