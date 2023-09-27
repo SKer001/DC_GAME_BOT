@@ -7,3 +7,4 @@ pyproject.toml
 replit.nix
 *.pyc
 keep_alive.py
+VSCODE.code-workspace
