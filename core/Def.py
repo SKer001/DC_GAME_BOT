@@ -58,6 +58,15 @@ class custom_bot_command():
     with open(f"cards/magics.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 
+################################################################################################################################
+
+  def check_card(type, name):
+    with open(f"cards/{type}.json", "r", encoding="utf-8") as file:
+      filecard = list(json.load(file))
+      for i in filecard:
+        if i[0] == name:
+          return dict(i)
+
 
 ################################################################################################################################
 
