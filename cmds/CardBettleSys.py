@@ -81,11 +81,32 @@ class CardBettleSys(Cog_Extension):
   @check.command()
   async def CheckCards(self, ctx, type: str, name: str):
     return_data = CBC.check_card(type,name)
-    if type == "magics":
-      print(return_data)
-    pass
-
-
+    if return_data != False:
+      if type == "magics":
+        Name = (f"Name : {return_data['name']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        SK = (f"Skilld's description : {return_data['skill-description']}")
+        await ctx.send(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
+      elif type == "monsters":
+        Name = (f"Name : {return_data['name']}\n")
+        atk = (f"ATK : {return_data['ATK']}\n")
+        Def = (f"DEF : {return_data['DEF']}\n")
+        matk = (f"MATK : {return_data['MATK']}\n")
+        mdef = (f"MDEF : {return_data['MDEF']}\n")
+        hp = (f"HP : {return_data['HP']}\n")
+        agi = (f"AGI : {return_data['AGI']}\n")
+        con = (f"CON : {return_data['CON']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        desc = (f"description : {return_data['description']}")
+        await ctx.send(f"card's information:\n>>>{type}<<<\n{Name}{atk}{Def}{matk}{mdef}{hp}{agi}{con}{SP}{desc}")
+      elif type == "traps":
+        Name = (f"Name : {return_data['name']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        SK = (f"Skilld's description : {return_data['skill-description']}")
+        await ctx.send(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
+    else:
+      await ctx.send(f"種類或名字打錯了喵!")
+    reback(ctx.author.name, ctx.author.id, "Check Cards")
 ################################################################################################################################
 async def setup(bot):
   await bot.add_cog(CardBettleSys(bot))

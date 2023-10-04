@@ -22,7 +22,7 @@ class custom_bot_command():
   ################################################################################################################################
   def create_monster_card(name: str, ATK: int, DEF: int, MATK: int, MDEF: int,
                           HP: int, AGI: int, CON: str, SP: int):
-    with open(f"cards/monster.json", "r", encoding="utf-8") as file:
+    with open(f"cards/monsters.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
     card_dic_basic = {
         "name": name,
@@ -37,14 +37,14 @@ class custom_bot_command():
         "description": ""
     }
     filecard.append(card_dic_basic)
-    with open(f"cards/monster.json", "w", encoding="utf-8") as CardFile:
+    with open(f"cards/monsters.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
 
   def create_trap_card(name: str, SP: int):
     with open(f"cards/traps.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
-    card_dic_basic = {"skill-name": name, "SP": SP, "skill-description": ""}
+    card_dic_basic = {"name": name, "SP": SP, "skill-description": ""}
     filecard.append(card_dic_basic)
     with open(f"cards/traps.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
@@ -53,21 +53,80 @@ class custom_bot_command():
   def create_magic_card(name: str, SP: int):
     with open(f"cards/magics.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
-    card_dic_basic = {"skill-name": name, "SP": SP, "skill-description": ""}
+    card_dic_basic = {"name": name, "SP": SP, "skill-description": ""}
     filecard.append(card_dic_basic)
     with open(f"cards/magics.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 
 ################################################################################################################################
-
-  def check_card(type, name):
-    with open(f"cards/{type}.json", "r", encoding="utf-8") as file:
-      filecard = list(json.load(file))
-      for i in filecard:
-        if i[0] == name:
-          return dict(i)
-
-
+#過濾問題
+  def check_card(types, name):
+    data_count = 0
+    if types == "magics":
+      with open (f"cards/{types}.json", "r", encoding="utf-8") as file:
+        filecard = list(json.load(file))
+      lone = len(filecard)
+      for cards in filecard :
+        if cards["name"] == name:
+          return cards
+        else:
+          data_count += 1
+      if data_count == lone:
+        return False
+    elif types == "monsters":
+      with open (f"cards/{types}.json", "r", encoding="utf-8") as file:
+        filecard = list(json.load(file))
+      lone = len(filecard)
+      for cards in filecard :
+        if cards["name"] == name:
+          return cards
+        else:
+          data_count += 1
+      if data_count == lone:
+        return False
+    elif types == "traps":
+      with open (f"cards/{types}.json", "r", encoding="utf-8") as file:
+        filecard = list(json.load(file))
+      lone = len(filecard)
+      for cards in filecard :
+        if cards["name"] == name:
+          return cards
+        else:
+          data_count += 1
+      if data_count == lone:
+        return False
+    else:
+      return False
+    # if types == "magics":
+    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
+    #     filecard = list(json.load(file))
+    #   try:
+    #     for i in filecard:
+    #       if i["name"] == name:
+    #         return dict(i)
+    #   except:
+    #     return False
+    # elif types == "monsters":
+    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
+    #     filecard = list(json.load(file))
+    #   try:
+    #     for i in filecard:
+    #       if i["name"] == name:
+    #         return dict(i)
+    #   except:
+    #     return False
+    # elif types == "traps":
+    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
+    #     filecard = list(json.load(file))
+    #   try:
+    #     for i in filecard:
+    #       if i["name"] == name:
+    #         return dict(i)
+    #   except:
+    #     return False
+    # else:
+    #   return False
+      
 ################################################################################################################################
 
   def reback(user_name, user_id, command):
