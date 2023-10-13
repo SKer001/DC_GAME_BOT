@@ -268,5 +268,43 @@ class slashcommand(Cog_Extension):
       await interaction.response.send_message(f"你沒資格", ephemeral=True)
 ##################################################################
 ##################################################################
+  @app_commands.command(name="check-card",description="Check the card")
+  @app_commands.describe(type="The type of card")
+  @app_commands.choices(type=[
+      DChoice(name="monsters", value=1),
+      DChoice(name="magics"  , value=2),
+      DChoice(name="traps"   , value=3)
+  ])
+  @app_commands.describe(name="The name of card")
+  async def checkcard(self, interaction: DInteracion, type: DChoice[int], name:str):
+    return_data = CBC.check_card(type.name,name)
+    if return_data != False:
+      if type == "magics":
+        Name = (f"Name : {return_data['name']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        SK = (f"Skilld's description : {return_data['skill-description']}")
+        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
+      elif type == "monsters":
+        Name = (f"Name : {return_data['name']}\n")
+        atk = (f"ATK : {return_data['ATK']}\n")
+        Def = (f"DEF : {return_data['DEF']}\n")
+        matk = (f"MATK : {return_data['MATK']}\n")
+        mdef = (f"MDEF : {return_data['MDEF']}\n")
+        hp = (f"HP : {return_data['HP']}\n")
+        agi = (f"AGI : {return_data['AGI']}\n")
+        con = (f"CON : {return_data['CON']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        desc = (f"description : {return_data['description']}")
+        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{atk}{Def}{matk}{mdef}{hp}{agi}{con}{SP}{desc}")
+      elif type == "traps":
+        Name = (f"Name : {return_data['name']}\n")
+        SP = (f"Star points : {return_data['SP']}\n")
+        SK = (f"Skilld's description : {return_data['skill-description']}")
+        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
+    else:
+      await interaction.response.send_message(f"種類或名字打錯了喵!")
+    reback(interaction.user.name, interaction.user.id, "Check Cards")
+##################################################################
+##################################################################
 async def setup(bot):
   await bot.add_cog(slashcommand(bot))
