@@ -59,7 +59,7 @@ class custom_bot_command():
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 
 ################################################################################################################################
-#過濾問題
+#
   def check_card(types, name):
     data_count = 0
     if types == "magics":
