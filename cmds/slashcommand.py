@@ -204,7 +204,6 @@ class slashcommand(Cog_Extension):
     await interaction.response.send_message(f"有>>>{List}<<<可以吃")
     reback(interaction.user.name, interaction.user.id, "slash_EatList")
 ##################################################################
-##################################################################
 
   @app_commands.command(name="create-monster-card",description="Create a new monster card")
   @app_commands.describe(name="The name of card")
@@ -267,7 +266,6 @@ class slashcommand(Cog_Extension):
     else:
       await interaction.response.send_message(f"你沒資格", ephemeral=True)
 ##################################################################
-##################################################################
   @app_commands.command(name="check-card",description="Check the card")
   @app_commands.describe(type="The type of card")
   @app_commands.choices(type=[
@@ -279,32 +277,58 @@ class slashcommand(Cog_Extension):
   async def checkcard(self, interaction: DInteracion, type: DChoice[int], name:str):
     return_data = CBC.check_card(type.name,name)
     if return_data != False:
-      if type == "magics":
-        Name = (f"Name : {return_data['name']}\n")
-        SP = (f"Star points : {return_data['SP']}\n")
-        SK = (f"Skilld's description : {return_data['skill-description']}")
-        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
-      elif type == "monsters":
-        Name = (f"Name : {return_data['name']}\n")
-        atk = (f"ATK : {return_data['ATK']}\n")
-        Def = (f"DEF : {return_data['DEF']}\n")
-        matk = (f"MATK : {return_data['MATK']}\n")
-        mdef = (f"MDEF : {return_data['MDEF']}\n")
-        hp = (f"HP : {return_data['HP']}\n")
-        agi = (f"AGI : {return_data['AGI']}\n")
-        con = (f"CON : {return_data['CON']}\n")
-        SP = (f"Star points : {return_data['SP']}\n")
-        desc = (f"description : {return_data['description']}")
-        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{atk}{Def}{matk}{mdef}{hp}{agi}{con}{SP}{desc}")
-      elif type == "traps":
-        Name = (f"Name : {return_data['name']}\n")
-        SP = (f"Star points : {return_data['SP']}\n")
-        SK = (f"Skilld's description : {return_data['skill-description']}")
-        await interaction.response.send_message(f"card's information:\n>>>{type}<<<\n{Name}{SP}{SK}")
+      if type.name == "magics":
+
+        stars_str = str("")
+        for i in range(int(return_data["SP"])):
+          stars_str = stars_str + "✨"
+        
+        magic_embed = discord.Embed(title="Mew", description="卡牌小助手")
+        magic_embed.set_author(name=stars_str, icon_url="https://cdn.discordapp.com/avatars/1147725051421016276/4d6b2777f0d18dfea2c67abb4fe8b911.png?size=4096")
+        magic_embed.add_field(name="卡牌名字", value=return_data['name'], inline=True)
+        magic_embed.add_field(name="種類", value=type.name,inline=True)
+        magic_embed.add_field(name="技能", value=return_data['SP'], inline=False)
+        magic_embed.add_field(name="=========卡牌介紹=========",value=return_data['skill-description'], inline=False)
+        await interaction.response.send_message(embed=magic_embed)
+      elif type.name == "monsters":
+
+        stars_str = str("")
+        for i in range(int(return_data["SP"])):
+          stars_str = stars_str + "✨"
+
+        monster_embed=discord.Embed(title="Mew", description="卡牌小助手")
+        monster_embed.set_author(name=stars_str, icon_url="https://cdn.discordapp.com/avatars/1147725051421016276/4d6b2777f0d18dfea2c67abb4fe8b911.png?size=4096")
+        monster_embed.add_field(name="卡牌名字", value=return_data['name'], inline=True)
+        monster_embed.add_field(name="種類", value=type.name,inline=False)
+        monster_embed.add_field(name="攻擊力", value=return_data['ATK'], inline=True)
+        monster_embed.add_field(name="魔法攻擊力", value=return_data['MATK'], inline=True)
+        monster_embed.add_field(name="防禦力", value=return_data['DEF'], inline=True)
+        monster_embed.add_field(name="魔法防禦力", value=return_data['MDEF'], inline=True)
+        monster_embed.add_field(name="生命值", value=return_data['HP'], inline=True)
+        monster_embed.add_field(name="閃避率", value=return_data['AGI'], inline=True)
+        monster_embed.add_field(name="屬性", value=return_data['CON'], inline=False) 
+        monster_embed.add_field(name="=========卡牌介紹=========",value=return_data['description'], inline=False)
+        monster_embed.set_footer(text="牌牌好好玩🎉🎉🎉")
+
+
+        await interaction.response.send_message(embed=monster_embed)
+      elif type.name == "traps":
+
+        stars_str = str("")
+
+        for i in range(int(return_data["SP"])):
+          stars_str = stars_str + "✨"
+        
+        trap_embed = discord.Embed(title="Mew", description="卡牌小助手")
+        trap_embed.set_author(name=stars_str, icon_url="https://cdn.discordapp.com/avatars/1147725051421016276/4d6b2777f0d18dfea2c67abb4fe8b911.png?size=4096")
+        trap_embed.add_field(name="卡牌名字", value=return_data['name'], inline=True)
+        trap_embed.add_field(name="種類", value=type.name,inline=True)
+        trap_embed.add_field(name="技能", value=return_data['SP'], inline=False)
+        trap_embed.add_field(name="=========卡牌介紹=========",value=return_data['skill-description'], inline=False)
+        await interaction.response.send_message(embed=trap_embed)
     else:
       await interaction.response.send_message(f"種類或名字打錯了喵!")
-    reback(interaction.user.name, interaction.user.id, "Check Cards")
-##################################################################
+    reback(interaction.user.name, interaction.user.id, "slash Check Cards")
 ##################################################################
 async def setup(bot):
   await bot.add_cog(slashcommand(bot))
