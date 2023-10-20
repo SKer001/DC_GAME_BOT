@@ -30,25 +30,26 @@ class slashcommand(Cog_Extension):
 ##################################################################
 
   @app_commands.command(name="slash", description="for test")
+  @app_commands.describe(user="you or other one")
   @app_commands.describe(choices="what do yuo want to see?")
   @app_commands.choices(choices=[
-      DChoice(name="your name", value=1),
-      DChoice(name="your discord id", value=2),
-      DChoice(name="your icon", value=3)
+      DChoice(name="name", value=1),
+      DChoice(name="discord id", value=2),
+      DChoice(name="icon", value=3)
   ])
-  async def slash(self, interaction: DInteracion, choices: DChoice[int]):
+  async def slash(self, interaction: DInteracion,user:discord.Member, choices: DChoice[int]):
     if choices.value == 1:
       await interaction.response.send_message(
-          f"{interaction.user.mention} your name is {interaction.user.name}",
+          f"{interaction.user.mention} name is {user.name}",
           ephemeral=True)
     elif choices.value == 2:
       await interaction.response.send_message(
-          f"{interaction.user.mention} your discord id is `{interaction.user.id}`",
+          f"{interaction.user.mention} discord id is {user.id}",
           ephemeral=True)
     elif choices.value == 3:
-      icon = interaction.user.avatar
+      icon = user.avatar
       await interaction.response.send_message(
-          f"{interaction.user.mention} your icon is here{icon}")
+          f"{interaction.user.mention} icon is here{icon}")
     reback(interaction.user.name, interaction.user.id, "slash_slash")
 ##################################################################
 
@@ -389,13 +390,6 @@ class slashcommand(Cog_Extension):
       await interaction.response.send_message(f"種類或名字打錯了喵!")
     reback(interaction.user.name, interaction.user.id, "slash Check Cards")
 ##################################################################
-
-  @app_commands.command(name="test-tag",
-                        description="for check the form of tag")
-  @app_commands.describe(user="check user")
-  async def checkuser(self, interaction: DInteracion, user: discord.Member):
-    pprint.pprint(interaction.guild.members.name)
-
 
 ##################################################################
 async def setup(bot):

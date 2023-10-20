@@ -97,35 +97,6 @@ class custom_bot_command():
         return False
     else:
       return False
-    # if types == "magics":
-    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
-    #     filecard = list(json.load(file))
-    #   try:
-    #     for i in filecard:
-    #       if i["name"] == name:
-    #         return dict(i)
-    #   except:
-    #     return False
-    # elif types == "monsters":
-    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
-    #     filecard = list(json.load(file))
-    #   try:
-    #     for i in filecard:
-    #       if i["name"] == name:
-    #         return dict(i)
-    #   except:
-    #     return False
-    # elif types == "traps":
-    #   with open(f"cards/{types}.json", "r", encoding="utf-8") as file:
-    #     filecard = list(json.load(file))
-    #   try:
-    #     for i in filecard:
-    #       if i["name"] == name:
-    #         return dict(i)
-    #   except:
-    #     return False
-    # else:
-    #   return False
       
 ################################################################################################################################
 
