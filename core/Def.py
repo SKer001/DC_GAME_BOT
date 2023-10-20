@@ -41,19 +41,19 @@ class custom_bot_command():
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
 
-  def create_trap_card(name: str, SP: int):
+  def create_trap_card(name: str, SK: str,SP: int):
     with open(f"cards/traps.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
-    card_dic_basic = {"name": name, "SP": SP, "skill-description": ""}
+    card_dic_basic = {"name": name, "SP": SP,"skill":SK, "skill-description": ""}
     filecard.append(card_dic_basic)
     with open(f"cards/traps.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
 
-  def create_magic_card(name: str, SP: int):
+  def create_magic_card(name: str, SK: str,SP: int):
     with open(f"cards/magics.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
-    card_dic_basic = {"name": name, "SP": SP, "skill-description": ""}
+    card_dic_basic = {"name": name, "SP": SP,"skill":SK, "skill-description": ""}
     filecard.append(card_dic_basic)
     with open(f"cards/magics.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)

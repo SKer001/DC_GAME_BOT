@@ -57,9 +57,9 @@ class CardBettleSys(Cog_Extension):
 ################################################################################################################################
 
   @trap.command()
-  async def CreateTrap(self, ctx, name: str, SP: int):
+  async def CreateTrap(self, ctx, name: str,skill:str, SP: int):
     if ctx.author.id == 403895664666214400:
-      CBC.create_card(name=name, SP=SP)
+      CBC.create_card(name=name,SK=skill,SP=SP)
       await ctx.send(
           f"{ctx.author.mention} Has created a new trap card into data")
       reback(ctx.author.name, ctx.author.id, "Create Trap Card")
@@ -68,9 +68,9 @@ class CardBettleSys(Cog_Extension):
 ################################################################################################################################
 
   @magic.command()
-  async def CreateMagic(self, ctx, name: str, SP: int):
+  async def CreateMagic(self, ctx, name: str,skill:str, SP: int):
     if ctx.author.id == 403895664666214400:
-      CBC.create_card(name=name, SP=SP)
+      CBC.create_card(name=name,SK=skill, SP=SP)
       await ctx.send(
           f"{ctx.author.mention} Has created a new magic card into data")
       reback(ctx.author.name, ctx.author.id, "Create Magic Card")
