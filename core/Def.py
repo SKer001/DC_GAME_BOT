@@ -1,3 +1,4 @@
+from typing import Optional
 import discord
 from discord.ext import commands
 import json
@@ -14,9 +15,22 @@ intents.guilds = True
 
 bot_def = commands.Bot(command_prefix='^', intents=intents)
 
+DInteraction = discord.Interaction
+
+DMember = discord.Member
+
+DButton = discord.ui.Button
+
 path = "log/" + str(
     datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")) + ".txt"
 
+def create_game_match(duelist):
+  with open(f"match/{duelist}.json", 'w',encoding="utf-8") as Mfile:
+    pass
+
+def updata_match_info(user,something):
+  with open(f"match/{user}.json", "w",encoding="utf-8") as Mfile:
+    json.dump(something, Mfile,indent=4)
 
 class custom_bot_command():
   ################################################################################################################################
@@ -108,3 +122,20 @@ class custom_bot_command():
       LogFile.write(
           f"{datetime.datetime.now()} used {command} by {user_name} {user_id}\n"
       )
+
+################################################################################################################################
+
+class Card_Bettle_System():
+  def start_game(duelist:DMember,competitor:DMember):
+    print(f"{datetime.datetime.utcnow()} {duelist.name} and {competitor.name} start a match")
+    create_game_match(duelist)
+    match_info = {
+      "members":[duelist.name,competitor.name],
+      "time":datetime.datetime.utcnow().strftime("%Y-%m-%d-%H-%M-%S"),
+      "Darea":[None,None,None,None,None],
+      "Carea":[None,None,None,None,None],
+      "drop_cards":[]
+    }
+    updata_match_info(duelist, match_info)
+    pass
+  pass

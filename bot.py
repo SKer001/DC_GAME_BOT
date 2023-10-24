@@ -37,6 +37,9 @@ async def on_ready():
     for filename in os.listdir("cmds"):
         if filename.endswith(".py"):
             await bot.load_extension(f"cmds.{filename[:-3]}")
+    for filename in os.listdir("cmds/slash_commands"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"cmds.slash_commands.{filename[:-3]}")
     reback("the bot","000000000000000001",">>>Allload<<<")
     try:
         sycned = await bot.tree.sync()
