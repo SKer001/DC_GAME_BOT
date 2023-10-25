@@ -25,7 +25,6 @@ DSelection = discord.ui.Select
 
 DView = discord.ui.View
 
-
 class ping_button(discord.ui.View):
 
   def __init__(self, ms: int):
@@ -71,8 +70,38 @@ class slash_Help_Menu(DView):
     message_id = interaction.message.id
 
     page_1 = discord.Embed(title="第一頁", description="關於機器人", color=0xe202f2)
+    page_1.add_field(
+      name="做這個機器人的理由?",
+      value="純粹就是因為不想用付費的機器人XD",
+      inline=False
+      )
+    page_1.add_field(
+      name="這機器人的未來發展?",
+      value="努力地朝著縫合怪之王的稱號前進",
+      inline=False
+      )
+    page_1.add_field(
+      name="關於指令",
+      value="[XXX]為必要參數\n{XXX}則為非必要參數",
+      inline=False
+      )
 
     page_2 = discord.Embed(title="第二頁", description="關於食物的指令", color=0xe202f2)
+    page_2.add_field(
+      name="隨機性選擇主餐",
+      value="/eatfood",
+      inline=False
+      )
+    page_2.add_field(
+      name="增加主餐選擇",
+      value="/addfood [addfood]",
+      inline=False
+      )
+    page_2.add_field(
+      name="查看食物的表單",
+      value="/foodlist",
+      inline=False
+      )
 
     page_3 = discord.Embed(title="第三頁", description="關於卡牌的指令", color=0xe202f2)
 

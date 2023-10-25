@@ -6,6 +6,7 @@ from discord import app_commands
 import datetime
 import os
 import random
+import pprint
 import json
 from core.Def import custom_bot_command as CBC
 from core.button_and_selection import * 
@@ -56,6 +57,7 @@ class slashcommand(Cog_Extension):
   @app_commands.command(name="help", description="The help menu")
   async def help(self,interaction:DInteraction):
     await interaction.response.send_message(view=slash_Help_Menu())
+    reback(interaction.user.name, interaction.user.id,"slash_help")
 ##################################################################
 
   @app_commands.command(name="reloadall", description="Reload all Cogs")
