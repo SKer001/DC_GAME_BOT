@@ -104,19 +104,60 @@ class slash_Help_Menu(DView):
       )
 
     page_3 = discord.Embed(title="第三頁", description="關於卡牌的指令", color=0xe202f2)
+    page_3.add_field(
+      name="創建卡牌",
+      value="*僅作者可使用*",
+      inline=False
+      )
+    page_3.add_field(
+      name="檢查卡牌(全部)",
+      value="/check-card [種類] [卡牌的名字]",
+      inline=False
+      )
+    page_3.add_field(
+      name="進行戰鬥(未完成)",
+      value="/card-fight [tag某人]",
+      inline=False
+      )
 
     page_4 = discord.Embed(title="第四頁", description="關於其他的指令", color=0xe202f2)
-
+    page_4.add_field(
+      name="取得某人的資料[名字 or ID or 頭像]",
+      value="/slash [tag某人]",
+      inline=False
+      )
+    page_4.add_field(
+      name="Help菜單",
+      value="/help",
+      inline=False
+      )
+    page_4.add_field(
+      name="操縱Cog",
+      value="*僅作者可使用*",
+      inline=False
+      )
+    page_4.add_field(
+      name="關於...",
+      value="/info [機器人或作者]",
+      inline=False
+      )
+    page_4.add_field(
+      name="Ping延遲",
+      value="/ping",
+      inline=False
+      )
+    page_4.add_field(
+      name="刪除紀錄",
+      value="*僅作者可使用*",
+      inline=False
+      )
+    
     if selection.values[0] == "1":
       await interaction.response.edit_message(embed=page_1, view=self)
-      #await interaction.followup.edit_message(message_id=message_id, view=self)
     elif selection.values[0] == "2":
       await interaction.response.edit_message(embed=page_2, view=self)
-      #await interaction.followup.edit_message(message_id=message_id, view=self)
     elif selection.values[0] == "3":
       await interaction.response.edit_message(embed=page_3, view=self)
-      #await interaction.followup.edit_message(message_id=message_id, view=self)
     elif selection.values[0] == "4":
       await interaction.response.edit_message(embed=page_4, view=self)
-      #await interaction.followup.edit_message(message_id=message_id, view=self)
     pass

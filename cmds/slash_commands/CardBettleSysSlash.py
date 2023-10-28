@@ -126,6 +126,7 @@ class slash_crad_bettle_sys(Cog_Extension):
         magic_embed.add_field(name="=========卡牌介紹=========",
                               value=return_data['skill-description'],
                               inline=False)
+        magic_embed.set_footer(text="牌牌好好玩🎉🎉🎉")
         await interaction.response.send_message(embed=magic_embed)
       elif type.name == "monsters":
 
@@ -193,6 +194,7 @@ class slash_crad_bettle_sys(Cog_Extension):
         trap_embed.add_field(name="=========卡牌介紹=========",
                              value=return_data['skill-description'],
                              inline=False)
+        trap_embed.set_footer(text="牌牌好好玩🎉🎉🎉")
         await interaction.response.send_message(embed=trap_embed)
     else:
       await interaction.response.send_message(f"種類或名字打錯了喵!")
