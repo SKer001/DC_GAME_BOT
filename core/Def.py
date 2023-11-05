@@ -6,6 +6,7 @@ import os
 import asyncio
 import datetime
 import requests
+import calendar
 
 intents = discord.Intents.default()
 intents.members = True
@@ -116,7 +117,7 @@ class custom_bot_command():
 
   def reback(user_name, user_id, command):
     print(
-        f"{datetime.datetime.utcnow()} used {command} by {user_name} {user_id}"
+        f"{datetime.datetime.now()} used {command} by {user_name} {user_id}"
     )
     with open(path, "a", encoding="utf-8") as LogFile:
       LogFile.write(
@@ -125,6 +126,49 @@ class custom_bot_command():
 
 ################################################################################################################################
 
+  def datetime_translate(data:list):
+
+    datetime_simple = datetime.datetime.now().strftime("%Y")
+
+    int_data = int(data[0])
+
+    data[1] = int(data[1])
+
+    data[2] = int(data[2])
+
+    if len(data[0]) == 4:
+
+      if int_data < 1900:
+        return "Year-error"
+      
+      else:
+        data[0] = int(data[0])
+
+    elif len(data[0]) == 2:
+
+      if int_data > int(datetime_simple[2:]):
+        data[0] = (int((datetime_simple)[0:2]) - 1)*100 + int_data
+
+      else:
+        data[0] = int((datetime_simple)[0:2])      *100 + int_data
+
+    elif len(data[0]) == 1:
+      data[0] = int((datetime_simple)[0:2])        *100 + int_data
+
+    elif len(data[0]) == 3:
+      return "Year-error"
+
+    if data[1] > 12:
+      return "month-error"
+    
+    elif data[2] > (calendar.monthrange(data[0],data[1]))[1]:
+      return "date-error"
+    
+    print(data)
+
+    return True
+    
+################################################################################################################################################################################################################################################################
 class Card_Bettle_System():
   def start_game(duelist:DMember,competitor:DMember):
     print(f"{datetime.datetime.utcnow()} {duelist.name} and {competitor.name} start a match")
