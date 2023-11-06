@@ -33,6 +33,14 @@ def updata_match_info(user,something):
   with open(f"match/{user}.json", "w",encoding="utf-8") as Mfile:
     json.dump(something, Mfile,indent=4)
 
+def load_birthday():
+  with open(f"birthday.json", "r", encoding="utf-8") as Bfile:
+    return json.load(Bfile)
+  
+def updata_birthday(file):
+  with open(f"birthday.json","w",encoding="utf-8") as Bfile:
+    json.dump(file, Bfile,indent=4)
+
 class custom_bot_command():
   ################################################################################################################################
   def create_monster_card(name: str, ATK: int, DEF: int, MATK: int, MDEF: int,
@@ -163,11 +171,21 @@ class custom_bot_command():
     
     elif data[2] > (calendar.monthrange(data[0],data[1]))[1]:
       return "date-error"
-    
-    print(data)
 
-    return True
-    
+    return data
+
+################################################################################################################################
+  def birth_data(name,id,birthday):
+    base_data = load_birthday()
+    base_data[f"{str(id)}"] = {
+      "discord-name":name,
+      "birthday":[
+        birthday[0],
+        birthday[1],
+        birthday[2]
+      ]
+    }
+    updata_birthday(base_data)
 ################################################################################################################################################################################################################################################################
 class Card_Bettle_System():
   def start_game(duelist:DMember,competitor:DMember):
