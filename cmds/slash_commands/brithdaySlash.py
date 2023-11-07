@@ -17,9 +17,21 @@ DInteraction = discord.Interaction
 
 reback = CBC.reback
 
+def load_birthday():
+  with open(f"birthday.json", "r", encoding="utf-8") as Bfile:
+    return json.load(Bfile)
+
 class brithdaySlash(Cog_Extension):
   def __init__(self, bot: commands.Bot):
     self.bot = bot
+##################################################################
+    async def check_birthday():
+      await self.bot.wait_until_ready()
+      while not self.bot.is_closed():
+        birth_data = load_birthday()
+        birth_data_keys = birth_data.keys()
+        pass
+    self.bg_task = self.bot.loop.create_task(check_birthday())
 ##################################################################
   @app_commands.command(name="remember-me", description="The bot will remember you brithday!!!")
   @app_commands.describe(yyyy="full numbers or last two numbers")
@@ -33,13 +45,15 @@ class brithdaySlash(Cog_Extension):
       CBC.birth_data(
         name=interaction.user.name,
         id=interaction.user.id,
+        guild_id=interaction.user.guild.id,
         birthday=[
           resource[0],
           resource[1],
           resource[2]
         ]
       )
-      await interaction.response.send_message(f"{interaction.user.mention}的生日是 {resource[0]}年{resource[1]}月{resource[2]}日，我記得了喵!!!")
+
+    await interaction.response.send_message(f"{interaction.user.mention}的生日是 {resource[0]}年{resource[1]}月{resource[2]}日，我記得了喵!!!")
     reback(interaction.user.name, interaction.user.id, "slash remember me")
 ##################################################################
 async def setup(bot):

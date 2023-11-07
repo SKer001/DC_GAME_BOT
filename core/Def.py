@@ -175,16 +175,16 @@ class custom_bot_command():
     return data
 
 ################################################################################################################################
-  def birth_data(name,id,birthday):
+  def birth_data(name,id,guild_id,birthday):
     base_data = load_birthday()
-    base_data[f"{str(id)}"] = {
+    base_data[str(guild_id)][str(id)]={
       "discord-name":name,
       "birthday":[
         birthday[0],
         birthday[1],
         birthday[2]
       ]
-    }
+    } 
     updata_birthday(base_data)
 ################################################################################################################################################################################################################################################################
 class Card_Bettle_System():
