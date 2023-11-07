@@ -30,7 +30,7 @@ class brithdaySlash(Cog_Extension):
       while not self.bot.is_closed():
         birth_data = load_birthday()
         birth_data_keys = birth_data.keys()
-        pass
+        await asyncio.sleep(60)
     self.bg_task = self.bot.loop.create_task(check_birthday())
 ##################################################################
   @app_commands.command(name="remember-me", description="The bot will remember you brithday!!!")
