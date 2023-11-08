@@ -175,16 +175,22 @@ class custom_bot_command():
     return data
 
 ################################################################################################################################
-  def birth_data(name,id,guild_id,birthday):
+  def birth_set_date(name,id,guild_id,birthday):
+    base_data = dict(load_birthday())
+    base_data[f"{str(guild_id)}"][f"{id}"]={
+        "discord-name":name,
+        "birthday":[
+          birthday[0],
+          birthday[1],
+          birthday[2]
+        ],
+        "celebrated":False
+      } 
+    updata_birthday(base_data)
+################################################################################################################################
+  def birth_set_channel(channel:discord.TextChannel):
     base_data = load_birthday()
-    base_data[str(guild_id)][str(id)]={
-      "discord-name":name,
-      "birthday":[
-        birthday[0],
-        birthday[1],
-        birthday[2]
-      ]
-    } 
+    base_data[str(channel.guild.id)]["celebrate_channel"]=channel.id
     updata_birthday(base_data)
 ################################################################################################################################################################################################################################################################
 class Card_Bettle_System():
