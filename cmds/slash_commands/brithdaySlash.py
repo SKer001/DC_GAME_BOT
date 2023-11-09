@@ -41,15 +41,23 @@ class brithdaySlash(Cog_Extension):
             for user in birth_data[guild].keys():
               if user != "celebrate_channel":
                 User = self.bot.get_user(int(user))
-                tf1 = birth_data[guild][user]["birthday"][1] == today[0] 
-                tf2 = birth_data[guild][user]["birthday"][2] == today[1] 
-                tf3 = birth_data[guild][user]["celebrated"] == False
-                if tf1 and tf2 and tf3:
-                  await celebrate_channel.send(f"{User.mention} 祝你生日快樂!!!")
-                  birth_data[guild][user]["celebrated"] = True
-                  updata_birthday(birth_data)
-                  reback(User.name,User.id,"birthday")
-                elif (not tf1) or (not tf2):
+                month = (birth_data[guild][user]["birthday"][1] == today[0] )
+                date = (birth_data[guild][user]["birthday"][2] == today[1] )
+                celebrated = (birth_data[guild][user]["celebrated"] == False)
+                if (month and date):
+                  if celebrated:
+                    if birth_data[guild][user]["birthday"][0] != None:
+                      ages = int(datetime.datetime.now().strftime("%Y")) - birth_data[guild][user]["birthday"][0]
+                      await celebrate_channel.send(f"{User.mention} 祝你{ages}歲生日快樂!!!")
+                      birth_data[guild][user]["celebrated"] = True
+                      updata_birthday(birth_data)
+                      reback(User.name,User.id,"birthday")
+                    else:
+                      await celebrate_channel.send(f"{User.mention} 祝你歲生日快樂!!!")
+                      birth_data[guild][user]["celebrated"] = True
+                      updata_birthday(birth_data)
+                      reback(User.name,User.id,"birthday")
+                else:
                   birth_data[guild][user]["celebrated"] = False
                   updata_birthday(birth_data)
               else:
@@ -60,7 +68,7 @@ class brithdaySlash(Cog_Extension):
   @app_commands.describe(yyyy="full numbers or last two numbers")
   @app_commands.describe(mm="month")
   @app_commands.describe(dd="date")
-  async def remembera_me(self,interaction:DInteraction,yyyy:str,mm:str,dd:str):
+  async def remembera_me(self,interaction:DInteraction,mm:str,dd:str,yyyy:str=None):
     resource = CBC.datetime_translate([yyyy,mm,dd])
     if resource in ["Year-error", "month-error", "date-error"]:
       await interaction.response.send_message(f"有東西打錯了喵!!! {resource}")

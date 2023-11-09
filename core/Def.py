@@ -137,41 +137,31 @@ class custom_bot_command():
   def datetime_translate(data:list):
 
     datetime_simple = datetime.datetime.now().strftime("%Y")
-
-    int_data = int(data[0])
-
     data[1] = int(data[1])
-
     data[2] = int(data[2])
-
-    if len(data[0]) == 4:
-
-      if int_data < 1900:
+    if data[0] != None:
+      if len(data[0]) == 4:
+        if int(data[0]) < 1900:
+          return "Year-error"
+        else:
+          data[0] = int(data[0])
+      elif len(data[0]) == 2:
+        if int(data[0]) > int(datetime_simple[2:]):
+          data[0] = (int((datetime_simple)[0:2]) - 1)*100 + int(data[0])
+        else:
+          data[0] = int((datetime_simple)[0:2])      *100 + int(data[0])
+      elif len(data[0]) == 1:
+        data[0] = int((datetime_simple)[0:2])        *100 + int(data[0])
+      elif len(data[0]) == 3:
         return "Year-error"
-      
-      else:
-        data[0] = int(data[0])
-
-    elif len(data[0]) == 2:
-
-      if int_data > int(datetime_simple[2:]):
-        data[0] = (int((datetime_simple)[0:2]) - 1)*100 + int_data
-
-      else:
-        data[0] = int((datetime_simple)[0:2])      *100 + int_data
-
-    elif len(data[0]) == 1:
-      data[0] = int((datetime_simple)[0:2])        *100 + int_data
-
-    elif len(data[0]) == 3:
-      return "Year-error"
-
+      elif data[2] > (calendar.monthrange(data[0],data[1]))[1]:
+        return "date-error"
+    else:
+      pass
     if data[1] > 12:
       return "month-error"
-    
-    elif data[2] > (calendar.monthrange(data[0],data[1]))[1]:
-      return "date-error"
-
+    data[1] = int(data[1])
+    data[2] = int(data[2])
     return data
 
 ################################################################################################################################
