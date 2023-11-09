@@ -53,7 +53,7 @@ class brithdaySlash(Cog_Extension):
                       updata_birthday(birth_data)
                       reback(User.name,User.id,"birthday")
                     else:
-                      await celebrate_channel.send(f"{User.mention} 祝你歲生日快樂!!!")
+                      await celebrate_channel.send(f"{User.mention} 祝你生日快樂!!!")
                       birth_data[guild][user]["celebrated"] = True
                       updata_birthday(birth_data)
                       reback(User.name,User.id,"birthday")
