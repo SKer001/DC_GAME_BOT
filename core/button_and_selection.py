@@ -23,6 +23,8 @@ DButton = discord.ui.button
 
 DSelection = discord.ui.Select
 
+DSelectOption = discord.SelectOption
+
 DView = discord.ui.View
 
 class ping_button(discord.ui.View):
@@ -46,28 +48,27 @@ class slash_Help_Menu(DView):
                      min_values=1,
                      placeholder="Choose a page",
                      options=[
-                         discord.SelectOption(
+                         DSelectOption(
                              label="Page 1",
                              value="1",
                              description="About this bot",
                              emoji="1️⃣",
                          ),
-                         discord.SelectOption(label="Page 2",
+                         DSelectOption(label="Page 2",
                                               value="2",
                                               description="About food command",
                                               emoji="2️⃣"),
-                         discord.SelectOption(label="Page 3",
+                         DSelectOption(label="Page 3",
                                               value="3",
                                               description="About card command",
                                               emoji="3️⃣"),
-                         discord.SelectOption(
+                         DSelectOption(
                              label="Page 4",
                              value="4",
                              description="About other command",
                              emoji="4️⃣")
                      ])
   async def helpmenu(self, interaction: DInteraction, selection: DSelection):
-    message_id = interaction.message.id
 
     page_1 = discord.Embed(title="第一頁", description="關於機器人", color=0xe202f2)
     page_1.add_field(

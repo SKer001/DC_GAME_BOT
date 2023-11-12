@@ -41,6 +41,15 @@ def updata_birthday(file):
   with open(f"birthday.json","w",encoding="utf-8") as Bfile:
     json.dump(file, Bfile,indent=4)
 
+def load_food():
+  with open("./For_Eat.json", "r", encoding="utf-8") as Jfile:
+    food_data = json.load(Jfile)
+  return food_data
+
+def food_updata(something):
+  with open("./For_Eat.json", "w", encoding="utf-8") as Jfile:
+    json.dump(something, Jfile, indent=4, ensure_ascii=False)
+
 class custom_bot_command():
   ################################################################################################################################
   def create_monster_card(name: str, ATK: int, DEF: int, MATK: int, MDEF: int,
@@ -63,7 +72,6 @@ class custom_bot_command():
     with open(f"cards/monsters.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
-
   def create_trap_card(name: str, SK: str,SP: int):
     with open(f"cards/traps.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
@@ -72,7 +80,6 @@ class custom_bot_command():
     with open(f"cards/traps.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
 ################################################################################################################################
-
   def create_magic_card(name: str, SK: str,SP: int):
     with open(f"cards/magics.json", "r", encoding="utf-8") as file:
       filecard = list(json.load(file))
@@ -80,7 +87,6 @@ class custom_bot_command():
     filecard.append(card_dic_basic)
     with open(f"cards/magics.json", "w", encoding="utf-8") as CardFile:
       json.dump(filecard, CardFile, indent=4, ensure_ascii=False)
-
 ################################################################################################################################
 #
   def check_card(types, name):
@@ -119,10 +125,8 @@ class custom_bot_command():
       if data_count == lone:
         return False
     else:
-      return False
-      
+      return False   
 ################################################################################################################################
-
   def reback(user_name, user_id, command):
     print(
         f"{datetime.datetime.now()} used {command} by {user_name} {user_id}"
@@ -133,7 +137,6 @@ class custom_bot_command():
       )
 
 ################################################################################################################################
-
   def datetime_translate(data:list):
 
     datetime_simple = datetime.datetime.now().strftime("%Y")
@@ -182,6 +185,20 @@ class custom_bot_command():
     base_data = load_birthday()
     base_data[str(channel.guild.id)]["celebrate_channel"]=channel.id
     updata_birthday(base_data)
+################################################################################################################################
+  def add_food_in(food_name:str,food_tags:list):
+    data = load_food()
+    data["total"][food_name] = food_tags
+    for tag in food_tags:
+      if food_name not in data[tag]:
+        data[tag].append(food_name)
+    food_updata(data)
+################################################################################################################################
+  def load_food_tag():
+    data = dict(load_food())
+    List = list(data.keys())
+    List.remove("total")
+    return List
 ################################################################################################################################################################################################################################################################
 class Card_Bettle_System():
   def start_game(duelist:DMember,competitor:DMember):

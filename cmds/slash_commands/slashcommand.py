@@ -188,5 +188,6 @@ class slashcommand(Cog_Extension):
       await interaction.response.send_message(f"你沒資格", ephemeral=True)
       reback(interaction.user.name, interaction.user.id, "slash_dellog_fail")
 ##################################################################
+
 async def setup(bot):
   await bot.add_cog(slashcommand(bot))
