@@ -1,13 +1,15 @@
 {
-    "verb": {},
+    "verb": {
+        "remember": "記得"
+    },
     "noun": {},
     "adverb": {},
     "adjective": {},
     "phrase": {},
     "user": {
         "1147706846342283355": {
-            "enable": true,
-            "question_sent": true
+            "enable": false,
+            "question_sent": false
         }
     }
 }

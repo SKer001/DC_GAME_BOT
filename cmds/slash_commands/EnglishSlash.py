@@ -1,16 +1,12 @@
 import discord
-from discord import interactions
-from core.classes import Cog_Extension
 from discord.ext import commands
 from discord import app_commands
-import datetime
-import os
-import random
-import json
+from discord import interactions
+from core.classes import Cog_Extension
 from core.Def import *
+import datetime,os,random,json,langid
 
 CBC = custom_bot_command
-
 
 DChoice = discord.app_commands.Choice
 
@@ -24,7 +20,7 @@ def load_english():
   
 def upload_english(file):
     with open("English.json", "w", encoding="utf-8") as Efile:
-        json.dump(file, Efile,indent=4)
+        json.dump(file, Efile,indent=4,ensure_ascii=False)
 
 def load_part_of_speech():
     keys = list((dict(load_english())).keys())
@@ -46,7 +42,7 @@ class english(Cog_Extension):
                 english_words = load_english()
                 all_channel = english_words["user"].keys()
                 for channel in all_channel:
-                    if english_words["user"][channel]["question_sent"] == False:
+                    if (english_words["user"][channel]["question_sent"] == False) and (english_words["user"][channel]["enable"] == True):
                         await self.bot.get_channel(int(channel)).send(f"not done")
                         english_words["user"][channel]["question_sent"] = True
                 upload_english(english_words)
@@ -58,19 +54,30 @@ class english(Cog_Extension):
     @app_commands.describe(part_of_speech="part of speech")
     @app_commands.choices(part_of_speech=load_part_of_speech())
     async def add_english_word(self,interaction:DInteracion,word:str,meaning:str,part_of_speech:DChoice[int]):
-       
-       pass
+        english_words = load_english()
+        if langid.classify(word)[0] == "en":
+            if langid.classify(meaning)[0] == "zh":
+                english_words[part_of_speech.name][word] = meaning
+                upload_english(english_words)
+                await interaction.response.send_message(f"已添加>>>{word}<<<到英文單字庫了喵")
+                reback(interaction.user.name,interaction.user.id,"Slash add English words")
+            elif langid.classify(meaning)[0] != "zh":
+                await interaction.response.send_message(f"{interaction.user.mention} >>>{meaning}<<<好像不是中文欸喵ᓚᘏᗢ")
+        elif langid.classify(word)[0] != "en":
+            await interaction.response.send_message(f"{interaction.user.mention} >>>{word}<<<好像不是英文欸喵ᓚᘏᗢ")
 ##################################################################
     @app_commands.command(name="set-english-channel",description="Set test channel")
     @app_commands.describe(channel="The channel you want to set")
-    async def setchannel(self,interaction:DInteracion,channel:discord.TextChannel=None):
+    @app_commands.describe(open="Do you want to take the exam?")
+    @app_commands.choices(open=[DChoice(name="Yes",value=True), DChoice(name="No",value=False)])
+    async def setchannel(self,interaction:DInteracion,channel:discord.TextChannel=None,open:DChoice[int]=True):
         english_words = load_english()
         if channel != None:
-            english_words["user"][str(channel.id)]["enable"] = True
+            english_words["user"][str(channel.id)]["enable"] = open.value
             english_words["user"][str(channel.id)]["question_sent"] = False
             await interaction.response.send_message(f"已經設{channel.mention}為英文單字考試的頻道了喵!!!")
         else:
-            english_words["user"][str(interaction.channel_id)]["enable"] = True
+            english_words["user"][str(interaction.channel_id)]["enable"] = open.value
             english_words["user"][str(interaction.channel_id)]["question_sent"] = False
             await interaction.response.send_message(f"已經設{interaction.channel.mention}為英文單字考試的頻道了喵!!!")
         upload_english(english_words)
