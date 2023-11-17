@@ -60,8 +60,20 @@ class english(Cog_Extension):
     async def add_english_word(self,interaction:DInteracion,word:str,meaning:str,part_of_speech:DChoice[int]):
        
        pass
-
-
-
+##################################################################
+    @app_commands.command(name="set-english-channel",description="Set test channel")
+    @app_commands.describe(channel="The channel you want to set")
+    async def setchannel(self,interaction:DInteracion,channel:discord.TextChannel=None):
+        english_words = load_english()
+        if channel != None:
+            english_words["user"][str(channel.id)]["enable"] = True
+            english_words["user"][str(channel.id)]["question_sent"] = False
+            await interaction.response.send_message(f"已經設{channel.mention}為英文單字考試的頻道了喵!!!")
+        else:
+            english_words["user"][str(interaction.channel_id)]["enable"] = True
+            english_words["user"][str(interaction.channel_id)]["question_sent"] = False
+            await interaction.response.send_message(f"已經設{interaction.channel.mention}為英文單字考試的頻道了喵!!!")
+        upload_english(english_words)
+        reback(interaction.user.name,interaction.user.id,"Slash set English channel")
 async def setup(bot):
     await bot.add_cog(english(bot))
