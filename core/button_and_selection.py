@@ -27,7 +27,14 @@ DSelectOption = discord.SelectOption
 
 DView = discord.ui.View
 
-class ping_button(discord.ui.View):
+english_words = []
+
+def random_choice_question(specify):
+  with open("English.json","r",encoding="utf-8") as Efile:
+    all_words = (dict(json.load(Efile))[specify])
+  print(all_words)
+
+class ping_button(DView):
 
   def __init__(self, ms: int):
     super().__init__()
@@ -37,6 +44,10 @@ class ping_button(discord.ui.View):
   async def ping(self, interaction: DInteraction, button: DButton):
     await interaction.response.send_message(
         f"{interaction.user.mention} Pong! {self.ms}ms")
+    
+class English_exam(DView):
+  def __init__(self):
+    pass
 
 
 class slash_Help_Menu(DView):

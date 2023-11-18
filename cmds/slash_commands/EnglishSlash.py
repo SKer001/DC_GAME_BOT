@@ -40,11 +40,11 @@ class english(Cog_Extension):
             while not self.bot.is_closed():
                 await asyncio.sleep(5)
                 english_words = load_english()
-                all_channel = english_words["user"].keys()
-                for channel in all_channel:
-                    if (english_words["user"][channel]["question_sent"] == False) and (english_words["user"][channel]["enable"] == True):
-                        await self.bot.get_channel(int(channel)).send(f"not done")
-                        english_words["user"][channel]["question_sent"] = True
+                all_guilds = [i for i in (english_words["user"]).keys()]
+                for guild in all_guilds:
+                    if (english_words["user"][guild]["question_sent"] == False) and (english_words["user"][guild]["enable"] == True):
+                        await self.bot.get_channel(english_words["user"][guild]["set_channel"]).send(f"not done")
+                        english_words["user"][guild]["question_sent"] = True
                 upload_english(english_words)
         self.bg_task = self.bot.loop.create_task(test())
 ##################################################################
@@ -73,14 +73,23 @@ class english(Cog_Extension):
     async def setchannel(self,interaction:DInteracion,channel:discord.TextChannel=None,open:DChoice[int]=True):
         english_words = load_english()
         if channel != None:
-            english_words["user"][str(channel.id)]["enable"] = open.value
-            english_words["user"][str(channel.id)]["question_sent"] = False
+            english_words["user"][str(channel.guild.id)] = {
+                "guild_name":channel.guild.name,
+                "set_channel":channel.id,
+                "enable":open.value,
+                "question_sent":False
+            }
             await interaction.response.send_message(f"已經設{channel.mention}為英文單字考試的頻道了喵!!!")
         else:
-            english_words["user"][str(interaction.channel_id)]["enable"] = open.value
-            english_words["user"][str(interaction.channel_id)]["question_sent"] = False
+            english_words["user"][str(interaction.guild.id)] = {
+                "guild_name":interaction.guild.name,
+                "set_channel":interaction.channel_id,
+                "enable":open.value,
+                "question_sent":False
+            }
             await interaction.response.send_message(f"已經設{interaction.channel.mention}為英文單字考試的頻道了喵!!!")
         upload_english(english_words)
         reback(interaction.user.name,interaction.user.id,"Slash set English channel")
+##################################################################
 async def setup(bot):
     await bot.add_cog(english(bot))
