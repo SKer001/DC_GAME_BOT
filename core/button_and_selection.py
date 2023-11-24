@@ -27,7 +27,7 @@ DSelectOption = discord.SelectOption
 
 DView = discord.ui.View
 
-english_words = []
+english_words = {}
 
 def random_choice_question(specify):
   with open("English.json","r",encoding="utf-8") as Efile:
@@ -47,6 +47,10 @@ class ping_button(DView):
     
 class English_exam(DView):
   def __init__(self):
+    super().__init__()
+
+  @discord.ui.button(label=english_words["ans_1"]["word"],style=discord.ButtonStyle.gray)
+  async def ans_1(self, interaction: DInteraction, button: DButton):
     pass
 
 
