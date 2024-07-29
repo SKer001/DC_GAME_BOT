@@ -39,7 +39,7 @@ class slashcommand(Cog_Extension):
       DChoice(name="discord id", value=2),
       DChoice(name="icon", value=3)
   ])
-  async def slash(self, interaction: DInteraction,user:discord.Member, choices: DChoice[int]):
+  async def slash(self, interaction:DInteraction,user:discord.Member, choices: DChoice[int]):
     if choices.value == 1:
       await interaction.response.send_message(
           f"{interaction.user.mention} name is {user.name}",

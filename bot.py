@@ -30,23 +30,33 @@ with open("config.json",mode='r',encoding="utf-8") as file:
 ################################################################
 @bot.event
 async def on_ready():
+
     config["online_times"] = config["online_times"] + 1
     times = config["online_times"]
     Channel = bot.get_guild(832219486153080883).get_channel(config["retrack_channel_id"])
+
     for filename in os.listdir("cmds"):
         if filename.endswith(".py"):
             await bot.load_extension(f"cmds.{filename[:-3]}")
+    
     for filename in os.listdir("cmds/slash_commands"):
         if filename.endswith(".py"):
             await bot.load_extension(f"cmds.slash_commands.{filename[:-3]}")
+    
     reback("the bot","000000000000000001",">>>Allload<<<")
-    try:
+
+
+    try:   ###
         sycned = await bot.tree.sync()
         print (f"Synced {len(sycned)} Slash commands")
     except Exception as e:
         print (e)
+
+    
     print(">>>Online<<<")
+
     await Channel.send("第"+ str(times) +"次線上上線ING")
+
     with open("config.json",mode='w',encoding="utf-8") as file:
         json.dump(config,file,indent=4)
 ################################################################
