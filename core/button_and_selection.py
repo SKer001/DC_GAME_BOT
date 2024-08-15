@@ -45,14 +45,6 @@ class ping_button(DView):
     await interaction.response.send_message(
         f"{interaction.user.mention} Pong! {self.ms}ms")
     
-class English_exam(DView):
-  def __init__(self):
-    super().__init__()
-
-  @discord.ui.button(label=english_words["ans_1"]["word"],style=discord.ButtonStyle.gray)
-  async def ans_1(self, interaction: DInteraction, button: DButton):
-    pass
-
 
 class slash_Help_Menu(DView):
 
